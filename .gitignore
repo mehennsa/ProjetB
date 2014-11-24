@@ -1,0 +1,11 @@
+*.pdb
+*.dll
+*.suo
+
+C#/BProject/Core/obj
+C#/BProject/Engine/obj
+C#/BProject/Services/obj
+
+C#/BProject/Core/bin
+C#/BProject/Engine/bin
+C#/BProject/Services/bin
