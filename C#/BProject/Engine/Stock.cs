@@ -6,22 +6,8 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public abstract class Stock : IQuote
+    public abstract class Stock : Quote
     {
-        double _value;
-        DateTime _date;
-
-        public double Value 
-        { 
-            get { return _value; } 
-            set { _value = value; } 
-        }
-
-        public DateTime Date 
-        { 
-            get { return _date; } 
-            set { _date = Date; } 
-        }
     }
 
     public class Open : Stock
