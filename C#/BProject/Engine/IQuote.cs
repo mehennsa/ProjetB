@@ -8,8 +8,8 @@ namespace Engine
 {
     public interface IQuote
     {
-        double Value { get; set; }
-        DateTime Date { get; set; }
+        double Value { get; }
+        DateTime Date { get; }
     }
 
     public abstract class Quote: IQuote
@@ -17,16 +17,20 @@ namespace Engine
         double _value;
         DateTime _date;
 
+        protected Quote(double value, DateTime date)
+        {
+            _value = value;
+            _date = date;
+        }
+
         public double Value
         {
             get { return _value; }
-            set { _value = value; }
         }
 
         public DateTime Date
         {
             get { return _date; }
-            set { _date = Date; }
         }
     }
 }

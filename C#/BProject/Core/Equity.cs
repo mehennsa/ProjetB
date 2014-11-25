@@ -7,19 +7,23 @@ using Engine;
 
 namespace Core
 {
-    public class Equity
+    public class Equity : IAsset
     {
         string _name;
 
         Dictionary<string, Curve> _stocks;
 
+        public Equity (string _name)
+        {
+            _stocks = new Dictionary<string, Curve>();
+        }
+
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
         }
 
-        private Dictionary<string, Curve> Stocks
+        public Dictionary<string, Curve> Stocks
         {
             get { return _stocks; }
             set { _stocks = value; }
