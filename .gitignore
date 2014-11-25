@@ -1,10 +1,9 @@
 *.pdb
-*.dll
 *.suo
 *.dbml
 
 
-
+C#/BProject/*.dll
 C#/BProject/Core/obj
 C#/BProject/Engine/obj
 C#/BProject/Services/obj
