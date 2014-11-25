@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEstimatorFeeder.cs" />
     <Compile Include="IMarketDataProvider.cs" />
     <Compile Include="DataProj.designer.cs">
       <AutoGen>True</AutoGen>
