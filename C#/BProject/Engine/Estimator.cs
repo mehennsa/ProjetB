@@ -6,22 +6,8 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public abstract class Estimator : IQuote
+    public abstract class Estimator : Quote
     {
-        double _value;
-        DateTime _date;
-
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
-
-        public DateTime Date
-        {
-            get { return _date; }
-            set { _date = Date; }
-        }
     }
 
     public class MA : Estimator
