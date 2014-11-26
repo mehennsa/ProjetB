@@ -1,0 +1,11 @@
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\TestBD.exe.config
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\TestBD.exe
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\TestBD.pdb
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\Services.dll
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\Engine.dll
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\APIFiMag.dll
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\Services.pdb
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\bin\Debug\Engine.pdb
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\obj\Debug\TestBD2.csprojResolveAssemblyReference.cache
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\obj\Debug\TestBD.exe
+C:\Users\guillaume\Documents\GitHub\ProjetB\C#\BProject\TestBD2\obj\Debug\TestBD.pdb
