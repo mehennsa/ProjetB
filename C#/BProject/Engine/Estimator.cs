@@ -9,6 +9,8 @@ namespace Engine
     public abstract class Estimator : Quote
     {
         public Estimator(double value, DateTime date) : base(value, date) { }
+     
+        public abstract void Compute(Curve curve) ;
     }
 
     public class MA : Estimator
@@ -23,6 +25,16 @@ namespace Engine
         public int Term
         {
             get { return _term; }
+        }
+
+        public override void Compute(Curve curve)
+        {
+
+        }
+
+        public override object Clone()
+        {
+            return new MA(this.Value, this.Date, this.Term);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public interface IQuote
+    public interface IQuote : ICloneable
     {
         double Value { get; }
         DateTime Date { get; }
@@ -26,11 +26,15 @@ namespace Engine
         public double Value
         {
             get { return _value; }
+            private set { _value = value; }
         }
 
         public DateTime Date
         {
             get { return _date; }
+            private set { _date = value; }
         }
+
+        public abstract object Clone();
     }
 }
