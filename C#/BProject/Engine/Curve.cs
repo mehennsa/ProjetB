@@ -8,19 +8,40 @@ namespace Engine
 {
     public class Curve
     {
-        List<IQuote> _quotes;
+        private readonly List<IQuote> _quotes;
         bool _isUpToDate;
 
-        public List<IQuote> Quotes 
+        public IReadOnlyCollection<IQuote> Quotes { get; private set; }
+
+        public Curve()
         {
-            get { return _quotes; }
-            set { _quotes = value; }
+            _quotes = new List<IQuote>();
+            _isUpToDate = false;
+        }
+
+        public Curve(List<IQuote> quotes, bool isUpToDate)
+        {
+            _quotes = quotes;
+            _isUpToDate = isUpToDate;
         }
 
         public bool IsUpToDate
         {
             get { return _isUpToDate; }
             set { _isUpToDate = value; }
+        }
+
+        public void Add(IQuote quote)
+        {
+            if (_quotes.Count == 0)
+                _quotes.Add(quote);
+            else
+            {
+                if (Object.ReferenceEquals(_quotes.GetType(), quote.GetType()))
+                    _quotes.Add(quote);
+                else
+                    throw new Exception("Try to add different quote type in a curve");
+            }
         }
     }
 }

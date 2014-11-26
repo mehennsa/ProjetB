@@ -1,13 +1,25 @@
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
 *.pdb
-*.dbml
-
-
-C#/BProject/*.dll
-C#/BProject/Core/obj
-C#/BProject/Engine/obj
-C#/BProject/Services/obj
-
-C#/BProject/Core/bin
-C#/BProject/Engine/bin
-C#/BProject/Services/bin
-C#/BProject/BProject.v12.suo
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
