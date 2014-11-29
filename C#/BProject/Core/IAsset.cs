@@ -9,7 +9,7 @@ namespace Core
 {
     public interface IAsset
     {
-        string Name { get; set; }
+        string Name { get; }
         Dictionary<string, Curve> Stocks { get; set;}
     }
 }

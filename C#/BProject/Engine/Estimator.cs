@@ -6,32 +6,44 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public abstract class Estimator : IQuote
+    //
+    // Représente un cours calculé.
+    //
+    public abstract class Estimator : Quote
     {
-        double _value;
-        DateTime _date;
-
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
-
-        public DateTime Date
-        {
-            get { return _date; }
-            set { _date = Date; }
-        }
+        public Estimator(double value, DateTime date) : base(value, date) { }
+     
+        // Fonction de calcul du cours. La construction du cours se fait à l'intérieur.
+        // curve: ensemble des cours nécessaires (!! ou non?  !!) pour construire le cours.
+        public abstract void Compute(Curve curve) ;
     }
 
+    //
+    // Moyenne mobile.
+    //
     public class MA : Estimator
     {
+        // Période de la MM.
         int _term;
+
+        public MA(double value, DateTime date, int term) : base(value, date) 
+        {
+            _term = term;
+        }
 
         public int Term
         {
             get { return _term; }
-            set { _term = value; }
+        }
+
+        public override void Compute(Curve curve)
+        {
+
+        }
+
+        public override object Clone()
+        {
+            return new MA(this.Value, this.Date, this.Term);
         }
     }
 }
