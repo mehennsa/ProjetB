@@ -12,7 +12,9 @@ namespace Engine
     public abstract class Estimator : Quote
     {
         public Estimator(double value, DateTime date) : base(value, date) {}
-        public Estimator(DateTime date) : base(0.0, date) { }
+        public Estimator(DateTime date) : base(0.0, date) {}
+
+        public abstract void Compute(Curve curve);
     }
 
     //
@@ -28,14 +30,18 @@ namespace Engine
             _term = term;
         }
 
+        public MA(DateTime date, int term) : base (date)
+        {
+            _term = term;
+        }
+
         public int Term
         {
             get { return _term; }
         }
 
-        public static MA Compute(Curve curve)
+        public override void Compute(Curve curve)
         {
-            return new MA(10, new DateTime(2014, 01, 01), 10);
         }
 
         public override object Clone()
