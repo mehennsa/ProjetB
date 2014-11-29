@@ -228,13 +228,6 @@ INSERT INTO [ProjetB].[dbo].[BindingStock]
            ([Ticker]
            ,[Name])
      VALUES
-           ('UL.PA'
-           ,'Unibail-Rodamsco')
-GO
-INSERT INTO [ProjetB].[dbo].[BindingStock]
-           ([Ticker]
-           ,[Name])
-     VALUES
            ('VIE.PA'
            ,'Veolia')
 GO

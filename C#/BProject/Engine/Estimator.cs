@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
+    //
+    // Représente un cours calculé.
+    //
     public abstract class Estimator : Quote
     {
-        public Estimator(double value, DateTime date) : base(value, date) { }
-     
-        public abstract void Compute(Curve curve) ;
+        public Estimator(double value, DateTime date) : base(value, date) {}
+        public Estimator(DateTime date) : base(0.0, date) { }
     }
 
+    //
+    // Moyenne mobile.
+    //
     public class MA : Estimator
     {
+        // Période de la MM.
         int _term;
 
         public MA(double value, DateTime date, int term) : base(value, date) 
@@ -27,9 +33,9 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Curve curve)
+        public static MA Compute(Curve curve)
         {
-
+            return new MA(10, new DateTime(2014, 01, 01), 10);
         }
 
         public override object Clone()

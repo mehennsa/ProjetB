@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Services;
+using Services.MarketDataProvider;
 
 namespace TestBD2
 {
@@ -11,7 +11,7 @@ namespace TestBD2
     {
         static void Main(string[] args)
         {
-            IMarketDataProvider bla = new IMarketDataProvider();
+            MarketDataProvider bla = new MarketDataProvider();
             bla.RefreshDataMarket();
         }
     }

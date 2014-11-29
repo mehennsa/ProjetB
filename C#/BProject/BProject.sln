@@ -2,6 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{BCF71EFF-8671-41DC-B0EE-FE67F1A3A7C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{53AEE63E-5A64-4201-8031-CBF1DFC8FD65}"
@@ -9,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{9973EF02-F93E-48E3-AF76-D335FE99AF63}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBD2", "TestBD2\TestBD2.csproj", "{40B419FC-833B-4A60-A282-444790FBD5EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9973EF02-F93E-48E3-AF76-D335FE99AF63} = {9973EF02-F93E-48E3-AF76-D335FE99AF63}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

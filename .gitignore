@@ -22,8 +22,13 @@ Thumbs.db
 [Dd]ebug*/
 *.lib
 *.sbr
+<<<<<<< HEAD
 obj/
 C#/BProject/Services/DataProj.dbml.layout
 C#/BProject/Services/DataProj.designer.cs
 C#/BProject/Services/Properties/Settings.Designer.cs
 C#/BProject/Services/Properties/Settings.settings
+=======
+*.settings
+obj/
+>>>>>>> 71b3c54536d27fe3a7b91bf28c17497b2a32933f
