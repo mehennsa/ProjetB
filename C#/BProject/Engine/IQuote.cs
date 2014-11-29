@@ -27,7 +27,7 @@ namespace Engine
         double _value;
         DateTime _date;
 
-        protected Quote(double value, DateTime date)
+        public Quote(double value, DateTime date)
         {
             _value = value;
             _date = date;
