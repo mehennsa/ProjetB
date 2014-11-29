@@ -23,3 +23,7 @@ Thumbs.db
 *.lib
 *.sbr
 obj/
+C#/BProject/Services/DataProj.dbml.layout
+C#/BProject/Services/DataProj.designer.cs
+C#/BProject/Services/Properties/Settings.Designer.cs
+C#/BProject/Services/Properties/Settings.settings
