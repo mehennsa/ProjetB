@@ -23,3 +23,11 @@ Thumbs.db
 *.lib
 *.sbr
 obj/
+*.dbml
+C#/BProject/BProject.v12.suo
+C#/BProject/TestBD2/bin/Debug/TestBD.exe
+C#/BProject/TestBD2/bin/Debug/TestBD.exe
+C#/BProject/TestBD2/bin/Debug/TestBD.exe
+C#/BProject/TestBD2/obj/Debug/TestBD.exe
+C#/BProject/TestBD2/obj/Debug/TestBD2.csproj.FileListAbsolute.txt
+C#/BProject/TestBD2/obj/Debug/TestBD2.csprojResolveAssemblyReference.cache
