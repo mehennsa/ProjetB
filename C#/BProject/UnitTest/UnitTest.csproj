@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -51,6 +52,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="EngineUnitTest.cs" />
+    <Compile Include="EstimatorCreator\MockEstimator.cs" />
+    <Compile Include="EstimatorCreator\EstimatorCreatorTest.cs" />
+    <Compile Include="EstimatorCreator\EstimatorCreatorHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +65,10 @@
     <ProjectReference Include="..\Engine\Engine.csproj">
       <Project>{53aee63e-5a64-4201-8031-cbf1dfc8fd65}</Project>
       <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{9973ef02-f93e-48e3-af76-d335fe99af63}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

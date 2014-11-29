@@ -11,7 +11,17 @@ namespace Services.EstimatorCreator
     {
         public static Engine.Estimator CreateEstimatorFromInfo(string assembly, string fullName)
         {
-            return Activator.CreateInstance(assembly, fullName).Unwrap() as Engine.Estimator;
+            if (string.IsNullOrEmpty(assembly) || string.IsNullOrEmpty(fullName))
+                return null;
+            try
+            {
+                return Activator.CreateInstance(assembly, fullName).Unwrap() as Engine.Estimator;
+
+            }
+            catch
+            {
+                throw new Exception("this estimator is not defined");
+            }
         }
     }
 }

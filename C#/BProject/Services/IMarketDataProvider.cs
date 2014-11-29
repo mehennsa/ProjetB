@@ -30,13 +30,13 @@ namespace Services
         {
             DateTime LastDat;
             //Récupération des tickers
-            var Actuel = (from x in db.BindingStock
+            var Actuel = (from x in db.BindingStocks
                           select x.Ticker).ToList();
             
             //Récupération de la dernière dates
             try
             {
-                var SearchLastDate = (from x in db.DataStock orderby x.Date descending select x.Date).ToList();
+                var SearchLastDate = (from x in db.DataStocks orderby x.Date descending select x.Date).ToList();
                 LastDat = SearchLastDate[0].Date.AddDays(1);
                 //Attention à la prise en compte des jours fériés
                 if (LastDat.DayOfWeek == DayOfWeek.Saturday)
@@ -91,7 +91,7 @@ namespace Services
                                 Open = table[3].Value.ToString(),
                                 Volume = table[4].Value.ToString()
                             };
-                            db.DataStock.InsertOnSubmit(StockInfo);
+                            db.DataStocks.InsertOnSubmit(StockInfo);
                         }
                         catch (Exception e)
                         {
