@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
+    //
+    // Représente un cours publié.
+    //
     public abstract class Stock : Quote
     {
         public Stock(double value, DateTime date) : base(value, date) { }
+
+        // !! Avoir une fonction permettant de remplir le cours grâce au service en liaison avec la BD ? !!
     }
 
+    //
+    // Cours d'ouverture
+    //
     public class Open : Stock
     {
         public Open(double value, DateTime date) : base(value, date) { }
@@ -21,6 +29,9 @@ namespace Engine
         }
     }
 
+    //
+    // Cours de fermeture
+    //
     public class Close : Stock
     {
         public Close(double value, DateTime date) : base(value, date) { }
@@ -31,6 +42,9 @@ namespace Engine
         }
     }
 
+    //
+    // Cours le plus haut de la journée
+    //
     public class High : Stock
     {
         public High(double value, DateTime date) : base(value, date) { }
@@ -41,6 +55,9 @@ namespace Engine
         }
     }
 
+    //
+    // Cours le plus bas de la journée
+    //
     public class Low : Stock
     {
         public Low(double value, DateTime date) : base(value, date) { }
@@ -51,6 +68,9 @@ namespace Engine
         }
     }
 
+    //
+    // Volume échangé dans la journée
+    //
     public class Volume : Stock
     {
         public Volume(double value, DateTime date) : base(value, date) { }
