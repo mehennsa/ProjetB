@@ -5,7 +5,7 @@ using Engine;
 namespace UnitTest
 {
     [TestClass]
-    public class EngineUnitTest
+    public class EngineUT
     {
         // Test d'ajout de cours.
         [TestMethod]
@@ -30,6 +30,12 @@ namespace UnitTest
             curve.Quotes.Add(new Open(1, new DateTime()));
 
             curve.Quotes.Add(new Close(1, new DateTime()));
+        }
+
+        // Test de calcul d'une moyenne mobile
+        [TestMethod]
+        public void UTMACreation()
+        {
         }
     }
 }
