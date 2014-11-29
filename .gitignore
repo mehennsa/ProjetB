@@ -22,4 +22,5 @@ Thumbs.db
 [Dd]ebug*/
 *.lib
 *.sbr
+*.settings
 obj/
