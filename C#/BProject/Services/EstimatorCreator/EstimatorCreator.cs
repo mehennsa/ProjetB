@@ -24,7 +24,6 @@ namespace Services.EstimatorCreator
                 try
                 {
                     estimator = (from e in context.Estimators
-                var estimator = (from e in context.Estimator 
                                      where e.Name == estimatorName
                                      select e).SingleOrDefault();
                 }
@@ -62,10 +61,7 @@ namespace Services.EstimatorCreator
                 try 
                 {
                         dbEstimators = (from e in context.Estimators
-                                        where estimatorNames.ToList().Contains(e.Name)
-                var dbEstimators = (from e in context.Estimator
-                                        where estimatorNames.Contains(e.Name)
-                                        select e);
+                                        select e).Where((e) => estimatorNames.Contains(e.Name));
                 } 
                 catch 
                 {
