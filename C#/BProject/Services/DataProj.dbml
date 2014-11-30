@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ProjetB" Class="DataProjDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(local)\Base;Initial Catalog=ProjetB;Integrated Security=True" SettingsObjectName="Services.Properties.Settings" SettingsPropertyName="ProjetBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local)\SQLEXPRESS;Initial Catalog=ProjetB;Integrated Security=True" SettingsObjectName="Services.Properties.Settings" SettingsPropertyName="ProjetBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BindingStock" Member="BindingStock">
     <Type Name="BindingStock">
       <Column Name="Ticker" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
