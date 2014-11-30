@@ -9,14 +9,14 @@ using APIFiMag.Datas;
 using Engine;
 using APIFiMag.Importer;
 
-namespace Services
+namespace Services.MarketDataProvider
 {
-    public class IMarketDataProvider
+    public class MarketDataProvider : IMarketDataProvider
     {
         public DataProjDataContext db;
 
 
-        public IMarketDataProvider()
+        public MarketDataProvider()
         {
             db = new DataProjDataContext();
         }
@@ -29,10 +29,16 @@ namespace Services
         public void RefreshDataMarket()
         {
             DateTime LastDat;
-            //Récupération des tickers
-            var Actuel = (from x in db.BindingStocks
-                          select x.Ticker).ToList();
-            
+            List<String> Actuel=null;
+            try
+            {
+                Actuel = (from x in db.BindingStock
+                              select x.Ticker).ToList();
+            }
+            catch (Exception Bind)
+            {
+                Console.WriteLine("Veuillez au préalable insérer des Actifs dans la base !");
+            }
             //Récupération de la dernière dates
             try
             {
@@ -42,7 +48,9 @@ namespace Services
                 if (LastDat.DayOfWeek == DayOfWeek.Saturday)
                 {
                     LastDat = LastDat.AddDays(2);
-                }else if(LastDat.DayOfWeek == DayOfWeek.Sunday){
+                }
+                else if (LastDat.DayOfWeek == DayOfWeek.Sunday)
+                {
                     LastDat = LastDat.AddDays(1);
                 }
             }
@@ -50,6 +58,7 @@ namespace Services
             {
                 LastDat = new DateTime(2007, 01, 01);
             }
+
 
             //Ajout des types de cours voulus
             List<HistoricalColumn> list = new List<HistoricalColumn>();
@@ -61,7 +70,8 @@ namespace Services
             List<String> symbol = new List<String>();
 
             //Ajoute les tickers à la liste des symboles 
-            for (int i=0; i<Actuel.Count; i++){ 
+            for (int i = 0; i < Actuel.Count; i++)
+            {
                 symbol.Add(Actuel[i]);
             }
 
@@ -118,3 +128,4 @@ namespace Services
         }
     }
 }
+

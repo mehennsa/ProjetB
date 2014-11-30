@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ProjetB" Class="DataProjDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local)\Base;Initial Catalog=ProjetB;Integrated Security=True" SettingsObjectName="Services.Properties.Settings" SettingsPropertyName="ProjetBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BindingStock" Member="BindingStock">
+    <Type Name="BindingStock">
+      <Column Name="Ticker" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DataEstimator" Member="DataEstimator">
+    <Type Name="DataEstimator">
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ticker" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DataStock" Member="DataStock">
+    <Type Name="DataStock">
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ticker" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[Open]" Member="Open" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="[Close]" Member="Close" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="High" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Low" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Volume" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Adjusted_close" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Estimator" Member="Estimator">
+    <Type Name="Estimator">
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[Full Name]" Member="Full_Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="[Assembly]" Member="Assembly" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -43,18 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEstimatorFeeder.cs" />
-    <Compile Include="IMarketDataProvider.cs" />
     <Compile Include="DataProj.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataProj.dbml</DependentUpon>
     </Compile>
+    <Compile Include="EstimatorFeeder\EstimatorFeeder.cs" />
+    <Compile Include="EstimatorFeeder\IEstimatorFeeder.cs" />
+    <Compile Include="MarketDataProvider\IMarketDataProvider.cs" />
     <Compile Include="EstimatorCreator\EstimatorCreator.cs" />
     <Compile Include="EstimatorCreator\EstimatorCreatorHelper.cs" />
     <Compile Include="EstimatorCreator\IEstimatorCreator.cs" />
     <Compile Include="GlobalServices\GlobalServices.cs" />
     <Compile Include="GlobalServices\IGlobalServices.cs" />
+    <Compile Include="MarketDataProvider\MarketDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -91,6 +93,7 @@
       <DependentUpon>DataProj.dbml</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

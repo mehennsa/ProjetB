@@ -11,11 +11,10 @@ namespace Engine
     //
     public abstract class Estimator : Quote
     {
-        public Estimator(double value, DateTime date) : base(value, date) { }
-     
-        // Fonction de calcul du cours. La construction du cours se fait à l'intérieur.
-        // curve: ensemble des cours nécessaires (!! ou non?  !!) pour construire le cours.
-        public abstract void Compute(Curve curve) ;
+        public Estimator(double value, DateTime date) : base(value, date) {}
+        public Estimator(DateTime date) : base(0.0, date) {}
+
+        public abstract void Compute(Curve curve);
     }
 
     //
@@ -31,6 +30,11 @@ namespace Engine
             _term = term;
         }
 
+        public MA(DateTime date, int term) : base (date)
+        {
+            _term = term;
+        }
+
         public int Term
         {
             get { return _term; }
@@ -38,7 +42,6 @@ namespace Engine
 
         public override void Compute(Curve curve)
         {
-
         }
 
         public override object Clone()
