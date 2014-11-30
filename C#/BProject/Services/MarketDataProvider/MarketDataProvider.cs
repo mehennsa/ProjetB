@@ -32,7 +32,7 @@ namespace Services.MarketDataProvider
             List<String> Actuel=null;
             try
             {
-                Actuel = (from x in db.BindingStock
+                Actuel = (from x in db.BindingStocks
                               select x.Ticker).ToList();
             }
             catch (Exception Bind)
