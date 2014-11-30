@@ -24,8 +24,8 @@ namespace Engine
     //
     public abstract class Quote: IQuote
     {
-        double _value;
-        DateTime _date;
+        protected double _value;
+        protected DateTime _date;
 
         public Quote(double value, DateTime date)
         {

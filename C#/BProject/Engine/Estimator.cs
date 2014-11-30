@@ -42,6 +42,8 @@ namespace Engine
 
         public override void Compute(Curve curve)
         {
+            //temporaire
+            _value = 1;
         }
 
         public override object Clone()
