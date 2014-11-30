@@ -70,6 +70,7 @@
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{9973ef02-f93e-48e3-af76-d335fe99af63}</Project>
       <Name>Services</Name>
+	 </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{b0131364-0ab6-45ab-91b8-100da37e1470}</Project>
       <Name>Tools</Name>
