@@ -5,7 +5,7 @@ using Ec = Services.EstimatorCreator;
 namespace UnitTest.EstimatorCreator
 {
     [TestClass]
-    public class EstimatorCreatorHelperTest
+    public class EstimatorCreatorHelperUT
     {
         private const string EstimatorName = "MockEstimator";
 

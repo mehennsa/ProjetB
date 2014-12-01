@@ -7,9 +7,19 @@ using Engine;
 
 namespace Core
 {
+    public enum QuoteType
+    {
+        OPEN,
+        CLOSE,
+        HIGH,
+        LOW,
+        VOLUME,
+        MA
+    }
+
     public interface IAsset
     {
         string Name { get; }
-        Dictionary<string, Curve> Stocks { get; set;}
+        Dictionary<QuoteType, Curve> Curves { get; set;}
     }
 }

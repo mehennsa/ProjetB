@@ -12,23 +12,23 @@ namespace Engine
     //
     public class Curve
     {
-        CurveList<IQuote> _quotes;
+        CurveList _quotes;
         // Permet de savoir si le cours le plus récent a été ajouté.
         bool _isUpToDate;
 
         public Curve()
         {
-            _quotes = new CurveList<IQuote>();
+            _quotes = new CurveList();
             _isUpToDate = false;
         }
 
-        public Curve(CurveList<IQuote> quotes, bool isUpToDate)
+        public Curve(CurveList quotes, bool isUpToDate)
         {
             _quotes = quotes;
             _isUpToDate = isUpToDate;
         }
 
-        public CurveList<IQuote> Quotes
+        public CurveList Quotes
         {
             get { return _quotes;  }
         }
@@ -44,16 +44,18 @@ namespace Engine
     // List définie pour construire une courbe.
     // Permet de contrôler l'insertion des cours.
     //
-    public class CurveList<IQuote> : List<IQuote>
+    public class CurveList : Dictionary<DateTime, IQuote>
     {
         public new void Add(IQuote quote)
         {
             if (Count == 0)
-                base.Add(quote);
+                base.Add(quote.Date, quote);
             else
             {
-                if (Object.ReferenceEquals(this[0].GetType(), quote.GetType()))
-                    base.Add(quote);
+                var list = this.ToList();
+
+                if (Object.ReferenceEquals(list[0].Value.GetType(), quote.GetType()))
+                        base.Add(quote.Date, quote);
                 else
                     throw new Exception("Try to add different quote type in a curve");
             }

@@ -45,6 +45,12 @@
     <Compile Include="IQuote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{b0131364-0ab6-45ab-91b8-100da37e1470}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

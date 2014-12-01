@@ -11,11 +11,12 @@ namespace Core
     {
         string _name;
 
-        Dictionary<string, Curve> _stocks;
+        Dictionary<QuoteType, Curve> _curves;
 
-        public Equity (string _name)
+        public Equity (string name)
         {
-            _stocks = new Dictionary<string, Curve>();
+            _curves = new Dictionary<QuoteType, Curve>();
+            _name = name;
         }
 
         public string Name
@@ -23,10 +24,10 @@ namespace Core
             get { return _name; }
         }
 
-        public Dictionary<string, Curve> Stocks
+        public Dictionary<QuoteType, Curve> Curves
         {
-            get { return _stocks; }
-            set { _stocks = value; }
+            get { return _curves; }
+            set { _curves = value; }
         }
     }
 }

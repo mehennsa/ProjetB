@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace Engine
 {
@@ -42,8 +43,12 @@ namespace Engine
 
         public override void Compute(Curve curve)
         {
-            //temporaire
-            _value = 1;
+            double sum = 0.0;
+            
+            for (int i = 0; i < _term; i++)
+                sum += curve.Quotes[_date.AddWorkDays(-i)].Value;
+
+            _value = sum;
         }
 
         public override object Clone()
