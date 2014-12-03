@@ -51,7 +51,7 @@ namespace UnitTest
 
             ma20.Compute(curve);
 
-            Assert.IsTrue(ma20.Value == 190);
+            Assert.IsTrue(ma20.Value == 9.5);
         }
     }
 }

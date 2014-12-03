@@ -48,12 +48,61 @@ namespace Engine
             for (int i = 0; i < _term; i++)
                 sum += curve.Quotes[_date.AddWorkDays(-i)].Value;
 
-            _value = sum;
+            _value = sum/_term;
         }
 
         public override object Clone()
         {
             return new MA(this.Value, this.Date, this.Term);
+        }
+    }
+
+    //
+    // Moyenne mobile exponentielle.
+    //
+    public class EMA : Estimator
+    {
+        // Période de la MM.
+        int _term;
+        // Lissage de la moyenne mobile
+        int _smooth;
+
+        public EMA(double value, DateTime date, int term, int smooth)
+            : base(value, date)
+        {
+            _term = term;
+            _smooth = smooth;
+        }
+
+        public EMA(DateTime date, int term)
+            : base(date)
+        {
+            _term = term;
+        }
+
+        public int Term
+        {
+            get { return _term; }
+        }
+
+        public int Smooth
+        {
+            get { return _smooth; }
+        }
+
+        public override void Compute(Curve curve)
+        {
+            double sum = 0.0;
+
+            for (int i = 0; i < _term; i++)
+                sum += curve.Quotes[_date.AddWorkDays(-i)].Value * Math.Pow(1-_smooth, i); 
+
+            _value = _smooth * sum;
+        }
+
+        public override object Clone()
+        {
+            return new EMA(this.Value, this.Date, this.Term, this.Smooth);
         }
     }
 }
