@@ -70,7 +70,7 @@ namespace Engine
         // Période de la MM.
         int _term;
         // Lissage de la moyenne mobile
-        int _smooth;
+        double _smooth;
 
         public EMA(double value, DateTime date, int term)
             : base(value, date)
@@ -83,6 +83,7 @@ namespace Engine
             : base(date)
         {
             _term = term;
+            _smooth = (double)2/(_term + 1);
         }
 
         public int Term
@@ -90,7 +91,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public int Smooth
+        public double Smooth
         {
             get { return _smooth; }
         }

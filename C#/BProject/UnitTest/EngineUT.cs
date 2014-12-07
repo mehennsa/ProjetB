@@ -57,5 +57,25 @@ namespace UnitTest
 
             Assert.IsTrue(ma20.Value == 9.5);
         }
+
+        // Test de calcul d'une moyenne mobile exponentielle
+        [TestMethod]
+        public void UTEMAComputation()
+        {
+            Dictionary<QuoteType, Curve> curves = new Dictionary<QuoteType, Curve>();
+            Curve curve = new Curve();
+            DateTime start = new DateTime(2014, 1, 2);
+
+            for (int i = 0; i < 20; i++)
+                curve.Quotes.Add(new Open(i, start.AddWorkDays(i)));
+
+            curves.Add(QuoteType.OPEN, curve);
+
+            EMA ema20 = new EMA(start.AddWorkDays(19), 20);
+
+            ema20.Compute(curves);
+
+            Assert.IsTrue(Math.Round(ema20.Value, 4) == 10.9187);
+        }
     }
 }
