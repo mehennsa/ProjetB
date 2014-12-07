@@ -10,13 +10,13 @@ namespace Services.GlobalServices
 {
     public interface IGlobalServices
     {
-        void Compute(IAsset asset, Engine.Estimator estimator);
+        void Compute(IAsset asset, string estimatorName);
 
-        void Compute(IAsset asset, IList<Engine.Estimator> estimators);
+        void Compute(IAsset asset, IList<string> estimatorNames);
 
         void GetLastMarketData(IAsset asset);
 
-        void GetEstimatorValues(IAsset asset, Engine.Estimator estimators, IList<DateTime> dates);
+        void GetEstimatorValues(IAsset asset, string estimatorName, IList<DateTime> dates);
 
         void RefreshAsset(IAsset asset);
     }

@@ -5,18 +5,61 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Services.EstimatorCreator;
+using Services.MarketDataProvider;
+using Services.EstimatorFeeder;
+using Engine;
 
 namespace Services.GlobalServices
 {
     public class GlobalServices : IGlobalServices
     {
 
-        public void Compute(IAsset asset, Engine.Estimator estimator)
+        #region Services
+
+        private IMarketDataProvider _provider;
+
+        private IEstimatorFeeder _feeder;
+
+        private IEstimatorCreator _creator;
+
+        #endregion
+
+        #region Constructor
+
+        public GlobalServices()
         {
-            throw new NotImplementedException();
+            _provider = new MarketDataProvider.MarketDataProvider();
+
+            _feeder = new EstimatorFeeder.EstimatorFeeder();
+
+            _creator = new EstimatorCreator.EstimatorCreator();
         }
 
-        public void Compute(IAsset asset, IList<Engine.Estimator> estimators)
+        public GlobalServices(IMarketDataProvider provider, IEstimatorFeeder feeder, IEstimatorCreator creator)
+        {
+            _provider = provider;
+
+            _feeder = feeder;
+
+            _creator = creator;
+        }
+
+        #endregion
+
+        #region IGlobalServices
+
+        public void Compute(IAsset asset, string estimatorName)
+        {
+            // Estimator Creation
+            Engine.Estimator estimator = _creator.CreateEstimator(estimatorName);
+
+            if (estimator != null)
+            {
+                estimator.Compute()
+            }
+        }
+
+        public void Compute(IAsset asset, IList<string> estimatorNames)
         {
             throw new NotImplementedException();
         }
@@ -26,14 +69,46 @@ namespace Services.GlobalServices
             throw new NotImplementedException();
         }
 
-        public void GetEstimatorValues(IAsset asset, Engine.Estimator estimators, IList<DateTime> dates)
+        public void GetEstimatorValues(IAsset asset, string estimatorName, IList<DateTime> dates)
         {
             throw new NotImplementedException();
         }
 
         public void RefreshAsset(IAsset asset)
         {
-            throw new NotImplementedException();
+            bool hasToBeRefreshed = false;
+            List<DateTime> dates = new List<DateTime>();
+            DateTime LastRecordedDate = DateTime.Today;
+            foreach (var item in asset.Stocks.Keys)
+            {
+                if (!asset.Stocks[item].IsUpToDate)
+                {
+                    hasToBeRefreshed = true;
+                    LastRecordedDate = asset.Stocks[item].Quotes.Max((q) => q.Date);
+                    break;
+                }
+
+                if (hasToBeRefreshed)
+                {
+                    FillWithWorkingDays(LastRecordedDate, DateTime.Today, dates);
+                    Dictionary<IQuote, Curve> infos = _provider.getLastMarketData(asset.Name, dates);
+                }
+            }
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private void FillWithWorkingDays(DateTime startDate, DateTime endDate, IList<DateTime> datesToRecord)
+        {
+            DateTime newDate = startDate;
+            while (newDate < endDate)
+            {
+                datesToRecord.Add(new DateTime(newDate.AddWorkDays(1)));
+            }
+        }
+
+        #endregion
     }
 }

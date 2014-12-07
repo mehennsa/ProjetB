@@ -36,3 +36,8 @@ C#/BProject/Services/DataProj.designer.cs
 C#/BProject/Services/Properties/Settings.Designer.cs
 C#/BProject/Services/Properties/Settings.settings
 *.settings
+C#/BProject/Services/app.config
+C#/BProject/Services/app.config
+C#/BProject/Services/app.config
+C#/BProject/Services/DataProj.dbml
+*.dbml
