@@ -55,7 +55,7 @@ namespace Services.GlobalServices
 
             if (estimator != null)
             {
-                estimator.Compute()
+                //estimator.Compute()
             }
         }
 
