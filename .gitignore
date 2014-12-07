@@ -41,3 +41,6 @@ C#/BProject/Services/app.config
 C#/BProject/Services/app.config
 C#/BProject/Services/DataProj.dbml
 *.dbml
+*.dbml
+*.config
+C#/BProject/UpgradeLog.htm
