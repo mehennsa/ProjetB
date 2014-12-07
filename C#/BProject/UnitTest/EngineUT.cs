@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Engine;
 using Tools;
@@ -41,15 +42,18 @@ namespace UnitTest
         [TestMethod]
         public void UTMAComputation()
         {
+            Dictionary<QuoteType, Curve> curves = new Dictionary<QuoteType,Curve>();
             Curve curve = new Curve();
             DateTime start = new DateTime(2014, 1, 2);
 
             for (int i = 0; i < 20; i++)
                 curve.Quotes.Add(new Open(i, start.AddWorkDays(i)));
 
+            curves.Add(QuoteType.OPEN, curve);
+
             MA ma20 = new MA(start.AddWorkDays(19), 20);
 
-            ma20.Compute(curve);
+            ma20.Compute(curves);
 
             Assert.IsTrue(ma20.Value == 9.5);
         }

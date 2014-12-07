@@ -15,7 +15,7 @@ namespace Engine
         public Estimator(double value, DateTime date) : base(value, date) {}
         public Estimator(DateTime date) : base(0.0, date) {}
 
-        public abstract void Compute(Curve curve);
+        public abstract void Compute(Dictionary<QuoteType, Curve> curve);
     }
 
     //
@@ -41,12 +41,17 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Curve curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
+            Curve open = curve[QuoteType.OPEN];
+            if (open == null)
+            {
+                throw new Exception("No open curve find for MA computation.");
+            }
+
             double sum = 0.0;
-            
             for (int i = 0; i < _term; i++)
-                sum += curve.Quotes[_date.AddWorkDays(-i)].Value;
+                sum += open.Quotes[_date.AddWorkDays(-i)].Value;
 
             _value = sum/_term;
         }
@@ -67,11 +72,11 @@ namespace Engine
         // Lissage de la moyenne mobile
         int _smooth;
 
-        public EMA(double value, DateTime date, int term, int smooth)
+        public EMA(double value, DateTime date, int term)
             : base(value, date)
         {
             _term = term;
-            _smooth = smooth;
+            _smooth = 2 / (_term + 1);
         }
 
         public EMA(DateTime date, int term)
@@ -90,19 +95,24 @@ namespace Engine
             get { return _smooth; }
         }
 
-        public override void Compute(Curve curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
-            double sum = 0.0;
+            Curve open = curve[QuoteType.OPEN];
+            if (open == null)
+            {
+                throw new Exception("No open curve find for EMA computation.");
+            }
 
+            double sum = 0.0;
             for (int i = 0; i < _term; i++)
-                sum += curve.Quotes[_date.AddWorkDays(-i)].Value * Math.Pow(1-_smooth, i); 
+                sum += open.Quotes[_date.AddWorkDays(-i)].Value * Math.Pow(1-_smooth, i); 
 
             _value = _smooth * sum;
         }
 
         public override object Clone()
         {
-            return new EMA(this.Value, this.Date, this.Term, this.Smooth);
+            return new EMA(this.Value, this.Date, this.Term);
         }
     }
 }

@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
+    public enum QuoteType
+    {
+        OPEN,
+        CLOSE,
+        HIGH,
+        LOW,
+        VOLUME,
+        MA
+    }
+
     //
     // Représente l'interface d'un cours publié ou calculé.
     // Est défini par un date et une valeur.
