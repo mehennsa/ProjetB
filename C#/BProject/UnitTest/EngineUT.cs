@@ -77,5 +77,25 @@ namespace UnitTest
 
             Assert.IsTrue(Math.Round(ema20.Value, 4) == 10.9187);
         }
+
+        // Test de calcul d'une moyenne mobile pondérée
+        [TestMethod]
+        public void UTWMAComputation()
+        {
+            Dictionary<QuoteType, Curve> curves = new Dictionary<QuoteType, Curve>();
+            Curve curve = new Curve();
+            DateTime start = new DateTime(2014, 1, 2);
+
+            for (int i = 0; i < 20; i++)
+                curve.Quotes.Add(new Open(100*Math.Sin(i), start.AddWorkDays(i)));
+
+            curves.Add(QuoteType.OPEN, curve);
+
+            WMA wma20 = new WMA(start.AddWorkDays(19), 20);
+
+            wma20.Compute(curves);
+
+            Assert.IsTrue(Math.Round(wma20.Value, 4) == -7.3910);
+        }
     }
 }

@@ -118,4 +118,118 @@ namespace Engine
             return new EMA(this.Value, this.Date, this.Term);
         }
     }
+
+    //
+    // Moyenne mobile pondérée.
+    //
+    public class WMA : Estimator
+    {
+        // Période de la MM.
+        int _term;
+
+        public WMA(double value, DateTime date, int term)
+            : base(value, date)
+        {
+            _term = term;
+        }
+
+        public WMA(DateTime date, int term)
+            : base(date)
+        {
+            _term = term;
+        }
+
+        public int Term
+        {
+            get { return _term; }
+        }
+
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        {
+            Curve open = curve[QuoteType.OPEN];
+            if (open == null)
+            {
+                throw new Exception("No open curve find for EMA computation.");
+            }
+
+            double sum = 0.0;
+            for (int i = 0; i < _term; i++)
+                sum += open.Quotes[_date.AddWorkDays(-i)].Value * (_term - i);
+
+            _value = sum/( _term*(_term + 1)/2);
+        }
+
+        public override object Clone()
+        {
+            return new WMA(this.Value, this.Date, this.Term);
+        }
+    }
+
+    //
+    // Moyenne mobile de Hull.
+    //
+    public class HMA : Estimator
+    {
+        // Période de la MM.
+        int _term;
+
+        public HMA(double value, DateTime date, int term)
+            : base(value, date)
+        {
+            _term = term;
+        }
+
+        public HMA(DateTime date, int term)
+            : base(date)
+        {
+            _term = term;
+        }
+
+        public int Term
+        {
+            get { return _term; }
+        }
+
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        {
+            Curve open = curve[QuoteType.OPEN];
+            if (open == null)
+            {
+                throw new Exception("No open curve find for EMA computation.");
+            }
+
+            WMA wmaHigh, wmaLow;
+            Curve wmaDiff = new Curve();
+            DateTime tempDate;
+            int sqrtTerm = (int)Math.Round(Math.Sqrt(_term));
+
+            // On calcule toutes les WMA nécessaires
+            for (int i = _term; i >= _term - sqrtTerm; i--)
+            {
+                tempDate = Date.AddWorkDays(i);
+
+                wmaHigh = new WMA(tempDate, i / 2);
+                wmaLow = new WMA(tempDate, i);
+
+                wmaHigh.Compute(curve);
+                wmaLow.Compute(curve);
+
+                wmaDiff.Quotes.Add(new Open(2 * wmaHigh.Value - wmaLow.Value, tempDate));
+            }
+
+            // On lance une WMA de période SQRT(_term) sur les WMA calculés
+            WMA wmaHull = new WMA(Date, sqrtTerm);
+            Dictionary<QuoteType, Curve> dOpenHull = new Dictionary<QuoteType, Curve>();
+            dOpenHull.Add(QuoteType.OPEN, wmaDiff);
+
+            wmaHull.Compute(dOpenHull);
+
+            _value = wmaHull.Value;
+        }
+
+        public override object Clone()
+        {
+            return new HMA(this.Value, this.Date, this.Term);
+        }
+    }
 }

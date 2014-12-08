@@ -13,7 +13,10 @@ namespace Engine
         HIGH,
         LOW,
         VOLUME,
-        MA
+        MA,
+        EMA,
+        HMA,
+        WMA
     }
 
     //
