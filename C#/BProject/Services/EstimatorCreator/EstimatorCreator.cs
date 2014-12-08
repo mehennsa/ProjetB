@@ -23,7 +23,7 @@ namespace Services.EstimatorCreator
 
                 try
                 {
-                    estimator = (from e in context.Estimators
+                    estimator = (from e in context.Estimator
                                      where e.Name == estimatorName
                                      select e).SingleOrDefault();
                 }
@@ -60,7 +60,7 @@ namespace Services.EstimatorCreator
                 IQueryable<Estimator> dbEstimators = null;
                 try 
                 {
-                        dbEstimators = (from e in context.Estimators
+                        dbEstimators = (from e in context.Estimator
                                         where estimatorNames.ToList().Contains(e.Name)
                                         select e);
                 } 

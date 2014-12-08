@@ -8,6 +8,7 @@ using Services.EstimatorCreator;
 using Services.MarketDataProvider;
 using Services.EstimatorFeeder;
 using Engine;
+using Tools;
 
 namespace Services.GlobalServices
 {
@@ -79,12 +80,12 @@ namespace Services.GlobalServices
             bool hasToBeRefreshed = false;
             List<DateTime> dates = new List<DateTime>();
             DateTime LastRecordedDate = DateTime.Today;
-            foreach (var item in asset.Stocks.Keys)
+            foreach (var item in asset.Curves.Keys)
             {
-                if (!asset.Stocks[item].IsUpToDate)
+                if (!asset.Curves[item].IsUpToDate)
                 {
                     hasToBeRefreshed = true;
-                    LastRecordedDate = asset.Stocks[item].Quotes.Max((q) => q.Date);
+                    LastRecordedDate = asset.Curves[item].Quotes.Max((q) => q.Value.Date);
                     break;
                 }
 
@@ -105,7 +106,7 @@ namespace Services.GlobalServices
             DateTime newDate = startDate;
             while (newDate < endDate)
             {
-                datesToRecord.Add(new DateTime(newDate.AddWorkDays(1)));
+                datesToRecord.Add(newDate.AddWorkDays(1));
             }
         }
 
