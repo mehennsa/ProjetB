@@ -15,6 +15,8 @@ namespace Engine
         public Estimator(double value, DateTime date) : base(value, date) {}
         public Estimator(DateTime date) : base(0.0, date) {}
 
+        public Estimator() { }
+
         public abstract void Compute(Dictionary<QuoteType, Curve> curve);
     }
 

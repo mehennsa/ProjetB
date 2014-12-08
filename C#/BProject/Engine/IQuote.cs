@@ -43,6 +43,9 @@ namespace Engine
             _date = date;
         }
 
+        // add parameterless constructors for other inherithed classes
+        public Quote() { }
+
         public double Value
         {
             get { return _value; }
