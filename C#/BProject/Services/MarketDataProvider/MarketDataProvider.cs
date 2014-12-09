@@ -32,7 +32,7 @@ namespace Services.MarketDataProvider
             List<String> Actuel=null;
             try
             {
-                Actuel = (from x in db.BindingStocks
+                Actuel = (from x in db.BindingStock
                               select x.Ticker).ToList();
             }
             catch (Exception Bind)
@@ -42,7 +42,7 @@ namespace Services.MarketDataProvider
             //Récupération de la dernière dates
             try
             {
-                var SearchLastDate = (from x in db.DataStocks orderby x.Date descending select x.Date).ToList();
+                var SearchLastDate = (from x in db.DataStock orderby x.Date descending select x.Date).ToList();
                 LastDat = SearchLastDate[0].Date.AddDays(1);
                 //Attention à la prise en compte des jours fériés
                 if (LastDat.DayOfWeek == DayOfWeek.Saturday)
@@ -101,7 +101,7 @@ namespace Services.MarketDataProvider
                                 Open = table[3].Value.ToString(),
                                 Volume = table[4].Value.ToString()
                             };
-                            db.DataStocks.InsertOnSubmit(StockInfo);
+                            db.DataStock.InsertOnSubmit(StockInfo);
                         }
                         catch (Exception e)
                         {
