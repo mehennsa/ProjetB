@@ -73,6 +73,10 @@
       <Project>{53aee63e-5a64-4201-8031-cbf1dfc8fd65}</Project>
       <Name>Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{b0131364-0ab6-45ab-91b8-100da37e1470}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

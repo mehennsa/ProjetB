@@ -27,7 +27,7 @@
 //                    Assembly = typeof(MockEstimator).Assembly.GetName().Name,
 //                    Full_Name = typeof(MockEstimator).FullName
 //                };
-//                ctx.Estimators.InsertOnSubmit(newEstimator);
+//                ctx.Estimator.InsertOnSubmit(newEstimator);
 //                ctx.SubmitChanges();
 //            }
 //        }
