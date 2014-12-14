@@ -92,7 +92,7 @@ namespace Services.GlobalServices
                 if (hasToBeRefreshed)
                 {
                     FillWithWorkingDays(LastRecordedDate, DateTime.Today, dates);
-                    Dictionary<IQuote, Curve> infos = _provider.getLastMarketData(asset.Name, dates);
+                   // Dictionary<IQuote, Curve> infos = _provider.getLastMarketData(asset.Name, dates);
                 }
             }
         }

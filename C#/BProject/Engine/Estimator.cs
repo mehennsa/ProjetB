@@ -28,6 +28,8 @@ namespace Engine
         // Période de la MM.
         int _term;
 
+        public MA() { }
+
         public MA(double value, DateTime date, int term) : base(value, date) 
         {
             _term = term;

@@ -55,6 +55,8 @@
     <Compile Include="EstimatorCreator\MockEstimator.cs" />
     <Compile Include="EstimatorCreator\EstimatorCreatorUT.cs" />
     <Compile Include="EstimatorCreator\EstimatorCreatorHelperUT.cs" />
+    <Compile Include="EstimatorFeeder\EstimatorFeederUT.cs" />
+    <Compile Include="MarketDataProvider\MarketDataProviderUT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolsUT.cs" />
     <Compile Include="CoreUT.cs" />

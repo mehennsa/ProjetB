@@ -21,10 +21,75 @@ namespace Services.MarketDataProvider
             db = new DataProjDataContext();
         }
 
-        public Dictionary<IQuote, Curve> getLastMarketData(string ticker, List<DateTime> dates)
+        //Code peu optimisé dû au parcours date par date des données
+        //Ajouter piur chaque type de quote, la curve relative
+        public Curve getLastMarketData(string ticker, QuoteType type, DateTime StartDate, DateTime EndDate)
         {
-            return null;
+            //Dictionary<string, dynamic> LastMarketDate = new Dictionary<string, dynamic>();
+            //Dictionary<string,dynamic> OpenCurve = new Dictionary<"Open",dynamic>();
+            Curve CurrentCurve = new Curve();
+            try
+            {
+                var Actuel = (from x in db.DataStock where x.Date >= StartDate && x.Date <= EndDate && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
+                var ActualUntilEnd = (from x in db.DataStock where x.Date >= StartDate  && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
+                if (type.ToString().Equals("OPEN"))
+                {
+                    for (int i = 0; i < Actuel.Count; i++)
+                    {
+                        Open OpenQuote = new Open(double.Parse(Actuel[i].Open), Actuel[i].Date);
+                        CurrentCurve.Quotes.Add(OpenQuote);
+                    }
+                }
+                else if (type.ToString().Equals("CLOSE"))
+                {
+                    for (int i = 0; i < Actuel.Count; i++)
+                    {
+                        Close CloseQuote = new Close(double.Parse(Actuel[0].Close), Actuel[0].Date);
+                        CurrentCurve.Quotes.Add(CloseQuote);
+                    }
+                }
+                else if (type.ToString().Equals("HIGH"))
+                {
+                    for (int i = 0; i < Actuel.Count; i++)
+                    {
+                        High HighQuote = new High(double.Parse(Actuel[0].High), Actuel[0].Date);
+                        CurrentCurve.Quotes.Add(HighQuote);
+                    }
+                }
+                else if (type.ToString().Equals("LOW"))
+                {
+                    for (int i = 0; i < Actuel.Count; i++)
+                    {
+                        Low LowQuote = new Low(double.Parse(Actuel[0].Low), Actuel[0].Date);
+                        CurrentCurve.Quotes.Add(LowQuote);
+                    }
+                }
+                else if (type.ToString().Equals("VOLUME"))
+                {
+                    for (int i = 0; i < Actuel.Count; i++)
+                    {
+                        Volume VolQuote = new Volume(double.Parse(Actuel[0].Volume), Actuel[0].Date);
+                        CurrentCurve.Quotes.Add(VolQuote);
+                    }
+                }
+
+
+                if (Actuel[Actuel.Count-1].Date.Equals(ActualUntilEnd[ActualUntilEnd.Count-1].Date))
+                {
+                    CurrentCurve.IsUpToDate = true;
+                }
+                
+                //LastMarketDate.Add("OPEN",new Dictionary<DateTime,IQuote>{Actuel.Date,new Open(Actuel.Open,Actuel.Date}));
+            }catch(Exception e)
+            {
+                throw new Exception("La requête n'a pas pu aboutir!");
+            }
+            return CurrentCurve;
         }
+
+
+
+
 
         public void RefreshDataMarket()
         {

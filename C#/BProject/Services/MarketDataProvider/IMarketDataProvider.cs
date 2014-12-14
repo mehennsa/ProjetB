@@ -13,7 +13,7 @@ namespace Services.MarketDataProvider
 {
     public interface IMarketDataProvider
     {
-        Dictionary<IQuote, Curve> getLastMarketData(string ticker, List<DateTime> dates);
+        Curve getLastMarketData(string ticker, QuoteType type, DateTime StartDate, DateTime EndDate);
 
         void RefreshDataMarket();
     }
