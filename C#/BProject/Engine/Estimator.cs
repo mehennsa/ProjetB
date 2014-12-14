@@ -208,7 +208,7 @@ namespace Engine
             // On calcule toutes les WMA nécessaires
             for (int i = _term; i >= _term - sqrtTerm; i--)
             {
-                tempDate = Date.AddWorkDays(i);
+                tempDate = Date.AddWorkDays(i-_term);
 
                 wmaHigh = new WMA(tempDate, i / 2);
                 wmaLow = new WMA(tempDate, i);

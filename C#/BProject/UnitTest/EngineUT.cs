@@ -47,7 +47,7 @@ namespace UnitTest
             DateTime start = new DateTime(2014, 1, 2);
 
             for (int i = 0; i < 20; i++)
-                curve.Quotes.Add(new Open(i, start.AddWorkDays(i)));
+                curve.Quotes.Add(new Open(100 * Math.Sin(i), start.AddWorkDays(i)));
 
             curves.Add(QuoteType.OPEN, curve);
 
@@ -55,7 +55,7 @@ namespace UnitTest
 
             ma20.Compute(curves);
 
-            Assert.IsTrue(ma20.Value == 9.5);
+            Assert.IsTrue(Math.Round(ma20.Value, 4) == 0.4264);
         }
 
         // Test de calcul d'une moyenne mobile exponentielle
@@ -67,7 +67,7 @@ namespace UnitTest
             DateTime start = new DateTime(2014, 1, 2);
 
             for (int i = 0; i < 20; i++)
-                curve.Quotes.Add(new Open(i, start.AddWorkDays(i)));
+                curve.Quotes.Add(new Open(100 * Math.Sin(i), start.AddWorkDays(i)));
 
             curves.Add(QuoteType.OPEN, curve);
 
@@ -75,7 +75,7 @@ namespace UnitTest
 
             ema20.Compute(curves);
 
-            Assert.IsTrue(Math.Round(ema20.Value, 4) == 10.9187);
+            Assert.IsTrue(Math.Round(ema20.Value, 4) == -6.3699);
         }
 
         // Test de calcul d'une moyenne mobile pondérée
@@ -96,6 +96,26 @@ namespace UnitTest
             wma20.Compute(curves);
 
             Assert.IsTrue(Math.Round(wma20.Value, 4) == -7.3910);
+        }
+
+        // Test de calcul d'une moyenne mobile de Hull
+        [TestMethod]
+        public void UTHMAComputation()
+        {
+            Dictionary<QuoteType, Curve> curves = new Dictionary<QuoteType, Curve>();
+            Curve curve = new Curve();
+            DateTime start = new DateTime(2014, 1, 2);
+
+            for (int i = 0; i < 20; i++)
+                curve.Quotes.Add(new Open(100 * Math.Sin(i), start.AddWorkDays(i)));
+
+            curves.Add(QuoteType.OPEN, curve);
+
+            HMA hma20 = new HMA(start.AddWorkDays(19), 20);
+
+            hma20.Compute(curves);
+
+            Assert.IsTrue(Math.Round(hma20.Value, 4) == -21.6408);
         }
     }
 }
