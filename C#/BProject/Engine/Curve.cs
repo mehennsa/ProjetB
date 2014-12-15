@@ -38,6 +38,7 @@ namespace Engine
             get { return _isUpToDate; }
             set { _isUpToDate = value; }
         }
+
     }
 
     //
@@ -59,6 +60,18 @@ namespace Engine
                 else
                     throw new Exception("Try to add different quote type in a curve");
             }
+        }
+
+        // Copy Constructor
+
+        public CurveList(Dictionary<DateTime, IQuote> dico)  : base(dico)
+        {
+
+        }
+
+        public CurveList() : base()
+        {
+
         }
     }
 }

@@ -41,6 +41,10 @@
   <ItemGroup>
     <Compile Include="Curve.cs" />
     <Compile Include="Estimator.cs" />
+    <Compile Include="Interface\IUseOtherEstimator.cs" />
+    <Compile Include="Stochastics\BaseStochastic.cs" />
+    <Compile Include="Stochastics\DPercentEstimator.cs" />
+    <Compile Include="Stochastics\KPercentEstimator.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="IQuote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +55,7 @@
       <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
