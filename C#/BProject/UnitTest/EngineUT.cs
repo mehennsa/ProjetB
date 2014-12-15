@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Engine;
 using Tools;
+using System.Linq;
 
 namespace UnitTest
 {
@@ -116,6 +117,38 @@ namespace UnitTest
             hma20.Compute(curves);
 
             Assert.IsTrue(Math.Round(hma20.Value, 4) == -21.6408);
+        }
+
+        // Test pour la création d'une sous courbe
+        [TestMethod]
+        public void CreateSubCurveTest()
+        {
+            // Création d'une courbe
+            Curve firstCurve = new Curve();
+            DateTime firstDate = new DateTime(2014, 12, 01);
+            DateTime today = new DateTime(2014, 12, 15);
+
+            // Création de nombres aléatoire
+
+            for (DateTime d = firstDate; d <= today; d = d.AddWorkDays(1))
+            {
+                Random r = new Random();
+
+                firstCurve.Quotes.Add(new Open(r.NextDouble()*100, d));
+            }
+
+            DateTime lastDate = new DateTime(2014, 12, 12);
+
+            Curve subCurve = firstCurve.CreateSubCurve(lastDate);
+
+            Assert.AreEqual(lastDate.WorkingDaysFromBetweenDates(firstDate) + 1, firstCurve.Quotes.Count);
+
+            Assert.AreEqual(firstCurve.Quotes[lastDate].Value, subCurve.Quotes[lastDate].Value);
+
+            DateTime lastDateInCurve = (from q in subCurve.Quotes
+                                        select q).Max((q) => q.Key);
+            Assert.AreEqual(lastDate, lastDateInCurve);
+
         }
     }
 }

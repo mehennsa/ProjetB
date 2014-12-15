@@ -58,6 +58,8 @@
     <Compile Include="EstimatorFeeder\EstimatorFeederUT.cs" />
     <Compile Include="MarketDataProvider\MarketDataProviderUT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stochastics\DPercentUT.cs" />
+    <Compile Include="Stochastics\KPercentUT.cs" />
     <Compile Include="ToolsUT.cs" />
     <Compile Include="CoreUT.cs" />
   </ItemGroup>
