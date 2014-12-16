@@ -32,7 +32,7 @@ namespace Engine.Stochastics
 
         #region Estimator
 
-        public abstract override void Compute(Dictionary<QuoteType, Curve> curve);
+        public abstract override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.NONE);
 
         public abstract override object Clone();
 

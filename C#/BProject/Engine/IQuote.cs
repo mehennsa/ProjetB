@@ -16,7 +16,8 @@ namespace Engine
         MA,
         EMA,
         HMA,
-        WMA
+        WMA,
+        NONE
     }
 
     //

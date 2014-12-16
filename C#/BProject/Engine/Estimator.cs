@@ -17,7 +17,7 @@ namespace Engine
 
         public Estimator() { }
 
-        public abstract void Compute(Dictionary<QuoteType, Curve> curve);
+        public abstract void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.NONE);
     }
 
     //
@@ -45,7 +45,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.OPEN];
             if (open == null)
@@ -100,7 +100,7 @@ namespace Engine
             get { return _smooth; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.OPEN];
             if (open == null)
@@ -146,7 +146,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.OPEN];
             if (open == null)
@@ -192,7 +192,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.OPEN];
             if (open == null)

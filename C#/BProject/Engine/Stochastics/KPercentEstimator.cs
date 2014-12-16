@@ -12,8 +12,8 @@ namespace Engine.Stochastics
 
 
         #region Stochastic
-        
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
             // getting the right curve
             Curve periodCurve = (from c in curve

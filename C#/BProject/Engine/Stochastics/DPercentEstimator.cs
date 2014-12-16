@@ -19,7 +19,7 @@ namespace Engine.Stochastics
 
         #region Stochastic
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
             if (!curve.ContainsKey(QuoteType.CLOSE))
                 throw new Exception("Missing close curve");
