@@ -28,12 +28,20 @@ namespace Engine.Stochastics
 
             DateTime lastDate = (from c in curve[QuoteType.CLOSE].Quotes
                                      select c.Key).Max();
+            Dictionary<QuoteType, Curve> curveCopy = new Dictionary<QuoteType, Curve>(curve);
+            double mean = 0;
 
             for (int i = 0; i < _period; i++)
             {
-                
+                curveCopy[QuoteType.CLOSE] = curveCopy[QuoteType.CLOSE].CreateSubCurve(lastDate.AddWorkDays(-i));
+                //_usedEstimator.Compute(curveCopy);
+                mean += _usedEstimator.Value;
 
             }
+
+            mean /= _period;
+            _value = mean;
+            _date = lastDate;
         }
 
         public override object Clone()
