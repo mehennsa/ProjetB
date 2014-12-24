@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tools;
+using System.Collections.Generic;
 
 namespace UnitTest
 {
@@ -61,6 +62,29 @@ namespace UnitTest
             Assert.AreEqual(7, today.WorkingDaysFromBetweenDates(workingDay));
             Assert.AreEqual(7, workingDay.WorkingDaysFromBetweenDates(today));
         }
+
+        #region XML Config Test
+
+        [TestMethod]
+        public void GetHolidaysForYear()
+        {
+            IList<DateTime> holidays2014 = ConfigurationHelper.getHolidaysForYear(2014);
+
+            Assert.AreEqual(11, holidays2014.Count);
+
+            Assert.IsTrue(holidays2014.Contains(new DateTime(2014, 06, 09)));
+            Assert.IsTrue(holidays2014.Contains(new DateTime(2014, 05, 29)));
+            Assert.IsFalse(holidays2014.Contains(new DateTime(2015, 04, 06)));
+
+            IList<DateTime> holidays2015 = ConfigurationHelper.getHolidaysForYear(2015);
+
+            Assert.IsFalse(holidays2015.Contains(new DateTime(2014, 06, 09)));
+            Assert.IsFalse(holidays2015.Contains(new DateTime(2014, 05, 29)));
+            Assert.IsTrue(holidays2015.Contains(new DateTime(2015, 04, 06)));
+            
+        }
+
+        #endregion
 
     }
 }

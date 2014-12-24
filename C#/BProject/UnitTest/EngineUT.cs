@@ -150,5 +150,105 @@ namespace UnitTest
             Assert.AreEqual(lastDate, lastDateInCurve);
 
         }
+
+        [TestMethod]
+        public void CompareToGreaterTest()
+        {
+            Open firstOpen = new Open(100, DateTime.Today);
+
+            Open otherOpen = new Open(90, DateTime.Today);
+
+            Assert.AreEqual(1, firstOpen.CompareTo(otherOpen));
+
+        }
+
+        [TestMethod]
+        public void CompareToLowerTest()
+        {
+            Open firstOpen = new Open(90, DateTime.Today);
+
+            Open otherOpen = new Open(100, DateTime.Today);
+
+            Assert.AreEqual(-1, firstOpen.CompareTo(otherOpen));
+
+        }
+
+        [TestMethod]
+        public void CompareToEqualTest()
+        {
+            Open firstOpen = new Open(100, DateTime.Today);
+
+            Open otherOpen = new Open(100, DateTime.Today);
+
+            Assert.AreEqual(0, firstOpen.CompareTo(otherOpen));
+
+        }
+
+        #region QuoteImplementation Test
+
+        [TestMethod]
+        public void QuoteImplentationTest()
+        {
+            Open open = QuoteCreatorHelper.CreateQuote(QuoteType.OPEN) as Open;
+
+            Assert.AreEqual(typeof(Open), open.GetType());
+            Assert.AreEqual(0, open.Value);
+            Assert.AreEqual(DateTime.Today, open.Date);
+
+            Close close = QuoteCreatorHelper.CreateQuote(QuoteType.CLOSE) as Close;
+
+            Assert.AreEqual(typeof(Close), close.GetType());
+
+            High high = QuoteCreatorHelper.CreateQuote(QuoteType.HIGH) as High;
+
+            Assert.AreEqual(typeof(High), high.GetType());
+
+            Low low = QuoteCreatorHelper.CreateQuote(QuoteType.LOW) as Low;
+
+            Assert.AreEqual(typeof(Low), low.GetType());
+
+            Volume vol = QuoteCreatorHelper.CreateQuote(QuoteType.VOLUME) as Volume;
+
+            Assert.AreEqual(typeof(Volume), vol.GetType());
+
+            Open newOpen = QuoteCreatorHelper.CreateQuote(QuoteType.OPEN, 100.2, new DateTime(2014, 12, 19)) as Open;
+
+            Assert.AreEqual(typeof(Open), newOpen.GetType());
+            Assert.AreEqual(100.2, newOpen.Value);
+            Assert.AreEqual(new DateTime(2014, 12, 19), newOpen.Date);
+
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void ConcatenateCurveTest()
+        {
+            Curve curve = new Curve();
+
+            DateTime startDate = new DateTime(2014, 12, 01);
+
+            DateTime firstEndDate = new DateTime(2014, 12, 05);
+            Random r = new Random();
+
+            for (DateTime d = startDate; d <= firstEndDate; d = d.AddWorkDays(1))
+            {
+                curve.Quotes.Add(new Close(r.Next(), d));
+            }
+
+            Curve otherCurve = new Curve();
+            DateTime secondEndDate = new DateTime(2014, 12, 11);
+            for (DateTime d = firstEndDate; d <= secondEndDate; d = d.AddWorkDays(1))
+            {
+                otherCurve.Quotes.Add(new Close(r.Next(), d));
+            }
+
+            Assert.AreEqual(5, curve.Quotes.Keys.Count);
+
+            curve.ConcatenateCurve(otherCurve);
+
+            Assert.AreEqual(9, curve.Quotes.Keys.Count);
+            Assert.AreEqual(curve.Quotes[secondEndDate], otherCurve.Quotes[secondEndDate]);
+        }
     }
 }

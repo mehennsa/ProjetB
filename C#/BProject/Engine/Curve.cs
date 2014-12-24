@@ -65,6 +65,19 @@ namespace Engine
             return subCurve;
         }
 
+        // Concatenate two curve
+        // Update the current curve
+        public void ConcatenateCurve(Curve otherCurve)
+        {
+            foreach (var item in otherCurve.Quotes)
+            {
+                if (!_quotes.ContainsKey(item.Key))
+                {
+                    _quotes.Add(item.Value.Clone() as IQuote);
+                }
+            }
+        }
+
     }
 
     //

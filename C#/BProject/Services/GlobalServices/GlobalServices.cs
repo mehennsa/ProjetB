@@ -56,45 +56,55 @@ namespace Services.GlobalServices
 
             if (estimator != null)
             {
-                //estimator.Compute()
+                estimator.Compute(asset.Curves);
+                _feeder.RecordValue(asset.Name, estimatorName, estimator);
             }
         }
 
         public void Compute(IAsset asset, IList<string> estimatorNames)
         {
-            throw new NotImplementedException();
+            if (estimatorNames == null || estimatorNames.Count == 0)
+            {
+                return;
+            }
+            foreach (var item in estimatorNames)
+            {
+                Compute(asset, item);
+            }
         }
 
+        // TODO : améliorer algo pour mettre à jour les courbes.
         public void GetLastMarketData(IAsset asset)
         {
-            throw new NotImplementedException();
+            
+            DateTime endDate = DateTime.Today.AddWorkDays(-1);
+
+            foreach (var key in asset.Curves.Keys)
+            {
+                Curve currentCurve = asset.Curves[key];
+                if (!currentCurve.IsUpToDate)
+                {
+
+                    // startDate
+                    DateTime startDate = (from q in currentCurve.Quotes.Keys
+                                          select q).Max();
+                    Curve newCurve = _provider.getLastMarketData(asset.Name, key, startDate, endDate);
+                    currentCurve.ConcatenateCurve(newCurve);
+                }
+            }
         }
 
-        public void GetEstimatorValues(IAsset asset, string estimatorName, IList<DateTime> dates)
+        // TODO fin de l'algo
+        public void GetEstimatorValues(IAsset asset, string estimatorName, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            // On vérifie que la courbe est à jour ou non
+            // Si non on récupère la courbe via le feeder
+            // ON concatène.
         }
 
         public void RefreshAsset(IAsset asset)
         {
-            bool hasToBeRefreshed = false;
-            List<DateTime> dates = new List<DateTime>();
-            DateTime LastRecordedDate = DateTime.Today;
-            foreach (var item in asset.Curves.Keys)
-            {
-                if (!asset.Curves[item].IsUpToDate)
-                {
-                    hasToBeRefreshed = true;
-                    LastRecordedDate = asset.Curves[item].Quotes.Max((q) => q.Value.Date);
-                    break;
-                }
-
-                if (hasToBeRefreshed)
-                {
-                    FillWithWorkingDays(LastRecordedDate, DateTime.Today, dates);
-                   // Dictionary<IQuote, Curve> infos = _provider.getLastMarketData(asset.Name, dates);
-                }
-            }
+            
         }
 
         #endregion

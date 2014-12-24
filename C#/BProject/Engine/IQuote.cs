@@ -25,7 +25,12 @@ namespace Engine
     // Est défini par un date et une valeur.
     // On connait le nom de l'asset associé via l'interface IAsset.
     //
-    public interface IQuote : ICloneable
+    [QuoteImplementation(Type = QuoteType.OPEN, ImplType = typeof(Open))]
+    [QuoteImplementation(Type = QuoteType.CLOSE, ImplType = (typeof(Close)))]
+    [QuoteImplementation(Type = QuoteType.HIGH, ImplType = (typeof(High)))]
+    [QuoteImplementation(Type = QuoteType.LOW, ImplType = (typeof(Low)))]
+    [QuoteImplementation(Type = QuoteType.VOLUME, ImplType = (typeof(Volume)))]
+    public interface IQuote : ICloneable, IComparable<IQuote>
     {
         // L'affectation de Value et Date ne peut pas se faire à l'extérieur de la classe implémentant l'interface.
         double Value { get; }
@@ -72,6 +77,23 @@ namespace Engine
             {
                 var quote = obj as Quote;
                 return (this.Value == quote.Value && this.Date == quote.Date);
+            }
+        }
+
+
+        public int CompareTo(IQuote other)
+        {
+            if (other.Value < Value)
+            {
+                return 1;
+            }
+            else if (other.Value > Value)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

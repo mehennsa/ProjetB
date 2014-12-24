@@ -39,11 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\QuoteCreatorHelper.cs" />
+    <Compile Include="Attributes\QuoteImplementation.cs" />
     <Compile Include="Curve.cs" />
     <Compile Include="Estimator.cs" />
     <Compile Include="Interface\IUseOtherEstimator.cs" />
+    <Compile Include="Stochastics\BaseMeanStochasticEstimator.cs" />
     <Compile Include="Stochastics\BaseStochastic.cs" />
     <Compile Include="Stochastics\DPercentEstimator.cs" />
+    <Compile Include="Stochastics\DSPercentEstimator.cs" />
+    <Compile Include="Stochastics\DSSPercentEstimator.cs" />
     <Compile Include="Stochastics\KPercentEstimator.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="IQuote.cs" />

@@ -57,5 +57,15 @@ namespace Engine.Stochastics
         }
 
         #endregion
+
+        #region Utils Methods
+
+        protected DateTime GetLastDateOnCurve(Curve curve)
+        {
+            return (from c in curve.Quotes
+                    select c.Key).Max();
+        }
+
+        #endregion
     }
 }

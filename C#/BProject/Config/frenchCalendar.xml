@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<Holidays>
+	
+	<!-- Jours fériés classique -->
+	<Holiday YearDependant="FALSE">
+		<Day>01</Day>
+		<Month>01</Month>
+	</Holiday>
+	
+	<Holiday YearDependant="FALSE">
+		<Day>01</Day>
+		<Month>05</Month>
+	</Holiday>
+	
+	<Holiday YearDependant="FALSE">
+		<Day>08</Day>
+		<Month>05</Month>
+	</Holiday>
+	
+	<Holiday YearDependant="FALSE">
+		<Day>14</Day>
+		<Month>07</Month>
+	</Holiday>
+	
+	<Holiday YearDependant="FALSE">
+		<Day>15</Day>
+		<Month>08</Month>
+	</Holiday>
+	
+		
+	<Holiday YearDependant="FALSE">
+		<Day>01</Day>
+		<Month>11</Month>
+	</Holiday>
+	
+		
+	<Holiday YearDependant="FALSE">
+		<Day>11</Day>
+		<Month>11</Month>
+	</Holiday>
+	
+	<Holiday YearDependant="FALSE">
+		<Day>25</Day>
+		<Month>12</Month>
+	</Holiday>
+	
+	<!-- 2014 -->
+	
+	<!-- Paques -->
+	<Holiday YearDependant="TRUE">
+		<Day>21</Day>
+		<Month>04</Month>
+		<Year>2014</Year>
+	</Holiday>
+	
+	<!-- Ascension -->
+	<Holiday YearDependant="TRUE">
+		<Day>29</Day>
+		<Month>05</Month>
+		<Year>2014</Year>
+	</Holiday>
+	
+	<!-- Lundi de la pentecôte -->
+	<Holiday YearDependant="TRUE">
+		<Day>09</Day>
+		<Month>06</Month>
+		<Year>2014</Year>
+	</Holiday>
+	
+	<!-- 2015 -->
+	
+	<!-- Paques -->
+	<Holiday YearDependant="TRUE">
+		<Day>06</Day>
+		<Month>04</Month>
+		<Year>2015</Year>
+	</Holiday>
+	
+	<!-- Ascension -->
+	<Holiday YearDependant="TRUE">
+		<Day>14</Day>
+		<Month>05</Month>
+		<Year>2015</Year>
+	</Holiday>
+	
+	<!-- Lundi de la pentecôte -->
+	<Holiday YearDependant="TRUE">
+		<Day>25</Day>
+		<Month>05</Month>
+		<Year>2015</Year>
+	</Holiday>
+	
+</Holidays>

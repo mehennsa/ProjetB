@@ -15,19 +15,26 @@ namespace Engine.Stochastics
 
         public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
+            if (QuoteType.NONE.Equals(quoteType))
+            {
+                quoteType = QuoteType.CLOSE;
+            }
+
             // getting the right curve
             Curve periodCurve = (from c in curve
-                                 where QuoteType.CLOSE.Equals(c.Key)
+                                 where quoteType.Equals(c.Key)
                                  select c.Value).SingleOrDefault();
             if (periodCurve == null)
-                throw new Exception("Close curve is missing");
+                throw new Exception("Quote curve is missing");
 
             // getting last date
             IQuote lastQuote = (from pc in periodCurve.Quotes
-                                     select pc.Value).Max();
+                                     orderby pc.Key ascending
+                                     select pc.Value
+                                     ).Last();
             // getting the curveList accordingly to the choosen period
             var curveList = (from pc in periodCurve.Quotes
-                             where pc.Key <= lastQuote.Date && pc.Key >= lastQuote.Date.AddWorkDays(-_period)
+                             where pc.Key <= lastQuote.Date && pc.Key > lastQuote.Date.AddWorkDays(-_period)
                              select pc);
             // max
             double maxValue = curveList.Max((pc) => pc.Value).Value;
@@ -37,7 +44,7 @@ namespace Engine.Stochastics
             // computation for date - 1
             _date = DateTime.Today.AddWorkDays(-1);
 
-            _value = (lastQuote.Value - minValue) / (maxValue - minValue);
+            _value = 100 * (lastQuote.Value - minValue) / (maxValue - minValue) ;
         }
 
         public override object Clone()

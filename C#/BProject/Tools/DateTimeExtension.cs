@@ -43,9 +43,7 @@ namespace Tools
 
         public static bool IsHoliday(this DateTime date)
         {
-            List<DateTime> holidays = new List<DateTime>();
-            
-            holidays.Add(new DateTime(2014, 01, 01));
+            IList<DateTime> holidays = ConfigurationHelper.getHolidaysForYear(date.Year);
 
             return holidays.Contains(date.Date);
         }
