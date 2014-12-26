@@ -47,7 +47,7 @@ namespace Engine
 
         public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
-            Curve open = curve[QuoteType.OPEN];
+            Curve open = curve[QuoteType.CLOSE];
             if (open == null)
             {
                 throw new Exception("No open curve find for MA computation.");
@@ -102,7 +102,7 @@ namespace Engine
 
         public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
-            Curve open = curve[QuoteType.OPEN];
+            Curve open = curve[QuoteType.CLOSE];
             if (open == null)
             {
                 throw new Exception("No open curve find for EMA computation.");
@@ -148,7 +148,7 @@ namespace Engine
 
         public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
-            Curve open = curve[QuoteType.OPEN];
+            Curve open = curve[QuoteType.CLOSE];
             if (open == null)
             {
                 throw new Exception("No open curve find for EMA computation.");
@@ -194,7 +194,7 @@ namespace Engine
 
         public override void Compute(Dictionary<QuoteType, Curve> curve)
         {
-            Curve open = curve[QuoteType.OPEN];
+            Curve open = curve[QuoteType.CLOSE];
             if (open == null)
             {
                 throw new Exception("No open curve find for EMA computation.");
@@ -216,13 +216,13 @@ namespace Engine
                 wmaHigh.Compute(curve);
                 wmaLow.Compute(curve);
 
-                wmaDiff.Quotes.Add(new Open(2 * wmaHigh.Value - wmaLow.Value, tempDate));
+                wmaDiff.Quotes.Add(new Close(2 * wmaHigh.Value - wmaLow.Value, tempDate));
             }
 
             // On lance une WMA de période SQRT(_term) sur les WMA calculés
             WMA wmaHull = new WMA(Date, sqrtTerm);
             Dictionary<QuoteType, Curve> dOpenHull = new Dictionary<QuoteType, Curve>();
-            dOpenHull.Add(QuoteType.OPEN, wmaDiff);
+            dOpenHull.Add(QuoteType.CLOSE, wmaDiff);
 
             wmaHull.Compute(dOpenHull);
 
@@ -232,6 +232,157 @@ namespace Engine
         public override object Clone()
         {
             return new HMA(this.Value, this.Date, this.Term);
+        }
+    }
+
+    //Calcul du RSI à partir d'une moyenne mobile simple
+    public class RSI : Estimator
+    {
+        // Période du RSI (Généralement 9 ou 14 jours !).
+        int _term;
+
+        public RSI(double value, DateTime date, int term)
+            : base(value, date)
+        {
+            _term = term;
+        }
+
+        public RSI(DateTime date, int term)
+            : base(date)
+        {
+            _term = term;
+        }
+
+        public int Term
+        {
+            get { return _term; }
+        }
+
+        //Calcul du RSI utilisation des n jours précédents la date d'aujourd'hui
+        //Et donc des n-1 derniers gains ou perte journalière
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        {
+            Curve close = curve[QuoteType.CLOSE];
+            if (close == null)
+            {
+                throw new Exception("No open curve find for RSI computation.");
+            }
+            double profitAverage = 0, looseAverage = 0, currentDiff = 0;
+            int profitNumber = 0, looseNumber = 0;
+            for (int i =1; i < _term ; i++)
+            {
+                currentDiff = close.Quotes[_date.AddWorkDays(-_term + i)].Value - close.Quotes[_date.AddWorkDays(-_term + i - 1)].Value;
+                if (currentDiff > 0)
+                {
+                    profitNumber++; profitAverage += currentDiff;
+                }
+                else
+                {
+                    looseNumber++; looseAverage += currentDiff;
+                }
+            }
+            profitAverage = profitNumber != 0 ? profitAverage / profitNumber : 1;
+            looseAverage = looseNumber != 0 ? looseAverage / looseNumber : 1;
+            _value = 100 - 100 / (1 + Math.Abs((profitAverage / looseAverage)));
+        }
+
+        public override object Clone()
+        {
+            return new RSI(this.Value, this.Date, this.Term);
+        }
+    }
+
+    //Calcul du ROC
+    public class ROC : Estimator
+    {
+        // Période du ROC (Généralement de quelques jours ~ 10 !).
+        int _term;
+
+        public ROC(double value, DateTime date, int term)
+            : base(value, date)
+        {
+            _term = term;
+        }
+
+        public ROC(DateTime date, int term)
+            : base(date)
+        {
+            _term = term;
+        }
+
+        public int Term
+        {
+            get { return _term; }
+        }
+
+        //Calcul du RSI utilisation des n jours précédents la date d'aujourd'hui
+        //Et donc des n-1 derniers gains ou perte journalière
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        {
+            Curve close = curve[QuoteType.CLOSE];
+            if (close == null)
+            {
+                throw new Exception("No open curve find for ROC computation.");
+            }
+            _value = 100 * (close.Quotes[_date.AddWorkDays(-1)].Value - close.Quotes[_date.AddWorkDays(-_term)].Value) / close.Quotes[_date.AddWorkDays(-_term)].Value;
+        }
+
+        public override object Clone()
+        {
+            return new ROC(this.Value, this.Date, this.Term);
+        }
+    }
+
+    //Calcul du uniquement de la ligne de MACD
+    //Il faudra ensuite calculé la EMA de cette ligne puis réalisé la différence dans les stratégies
+    public class MACDLine : Estimator
+    {
+        // Période du MACD (Généralement la différence entre la EMA 12 et 26 jours !).
+        int _farTerm;
+        int _nearTerm;
+
+        public MACDLine(double value, DateTime date, int nearTerm, int farTerm)
+            : base(value, date)
+        {
+            _farTerm = farTerm;
+            _nearTerm = nearTerm;
+        }
+
+        public MACDLine(DateTime date, int nearTerm, int farTerm)
+            : base(date)
+        {
+            _nearTerm = nearTerm;
+            _farTerm = farTerm;
+        }
+
+        public int nearTerm
+        {
+            get { return _nearTerm; }
+        }
+
+        public int farTerm
+        {
+            get { return _farTerm; }
+        }
+
+        //Calcul du MACDLine 
+        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        {
+            Curve close = curve[QuoteType.CLOSE];
+            if (close == null)
+            {
+                throw new Exception("No open curve find for MACD computation.");
+            }
+            EMA ema12 = new EMA(_date,12);
+            EMA ema26 = new EMA(_date,26);
+            ema26.Compute(curve);
+            ema12.Compute(curve);
+            _value = ema12.Value - ema26.Value; 
+        }
+
+        public override object Clone()
+        {
+            return new MACDLine(this.Value, this.Date, this.nearTerm, this.farTerm);
         }
     }
 }

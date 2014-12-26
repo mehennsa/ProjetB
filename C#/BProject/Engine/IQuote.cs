@@ -16,7 +16,10 @@ namespace Engine
         MA,
         EMA,
         HMA,
-        WMA
+        WMA,
+        RSI,
+        ROC,
+        MACDLine
     }
 
     //

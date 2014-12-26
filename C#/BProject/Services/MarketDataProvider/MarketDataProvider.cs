@@ -25,8 +25,6 @@ namespace Services.MarketDataProvider
         //Ajouter piur chaque type de quote, la curve relative
         public Curve getLastMarketData(string ticker, QuoteType type, DateTime StartDate, DateTime EndDate)
         {
-            //Dictionary<string, dynamic> LastMarketDate = new Dictionary<string, dynamic>();
-            //Dictionary<string,dynamic> OpenCurve = new Dictionary<"Open",dynamic>();
             Curve CurrentCurve = new Curve();
             try
             {
@@ -85,6 +83,17 @@ namespace Services.MarketDataProvider
                 throw new Exception("La requête n'a pas pu aboutir!");
             }
             return CurrentCurve;
+        }
+
+
+        public Curve getLastMarketData(string ticker, QuoteType type, DateTime StartDate, DateTime EndDate)
+        {
+            Curve CurrentCurve = new Curve();
+            try
+            {
+                var Actuel = (from x in db.DataStock where x.Date >= StartDate && x.Date <= EndDate && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
+                var ActualUntilEnd = (from x in db.DataStock where x.Date >= StartDate && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
+            }
         }
 
 

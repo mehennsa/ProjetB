@@ -67,7 +67,8 @@ namespace Services.EstimatorFeeder
         }
 
 
-        //Retourne sous la forme d'une curve les valeurs d'un estimateurs sur une plage de date
+        //Retourne sous la forme d'une curve les valeurs d'un estimateur sur une plage de date
+        //Change le type en quoteType
         public Curve GetEstimatorForTicker(string ticker, String type, string estimatorName, DateTime StartDate, DateTime EndDate)
         {
             Curve CurrentCurve = new Curve();
@@ -86,8 +87,6 @@ namespace Services.EstimatorFeeder
             {
                 throw new Exception("Impossible de trouver le bon estimateur !");
             }
-
-
             return CurrentCurve;
         }
     }
