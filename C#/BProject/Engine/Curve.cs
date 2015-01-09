@@ -36,8 +36,14 @@ namespace Engine
 
         public bool IsUpToDate
         {
-            get { return _isUpToDate; }
-            set { _isUpToDate = value; }
+            get {
+                DateTime max = DateTime.MinValue;
+                foreach (DateTime date in _quotes.Keys)
+                    if (date > max)
+                        max = date;
+                
+                return (max == DateTime.Now.AddWorkDays(-1));
+            }
         }
 
         /// <summary>

@@ -72,10 +72,10 @@ namespace Services.MarketDataProvider
                 }
 
 
-                if (Actuel[Actuel.Count-1].Date.Equals(ActualUntilEnd[ActualUntilEnd.Count-1].Date))
-                {
-                    CurrentCurve.IsUpToDate = true;
-                }
+                //if (Actuel[Actuel.Count-1].Date.Equals(ActualUntilEnd[ActualUntilEnd.Count-1].Date))
+                //{
+                //    CurrentCurve.IsUpToDate = true;
+                //}
                 
                 //LastMarketDate.Add("OPEN",new Dictionary<DateTime,IQuote>{Actuel.Date,new Open(Actuel.Open,Actuel.Date}));
             }catch(Exception e)
