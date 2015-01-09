@@ -80,25 +80,42 @@ namespace Services.MarketDataProvider
                 //LastMarketDate.Add("OPEN",new Dictionary<DateTime,IQuote>{Actuel.Date,new Open(Actuel.Open,Actuel.Date}));
             }catch(Exception e)
             {
-                throw new Exception("La requête n'a pas pu aboutir!");
+                throw new Exception("Impossible to perform this request!");
             }
             return CurrentCurve;
         }
 
 
-        public Curve getLastMarketData(string ticker, QuoteType type, DateTime StartDate, DateTime EndDate)
+        public Curve getLastEstimatorData(string ticker, QuoteType type, int period, DateTime StartDate, DateTime EndDate)
         {
             Curve CurrentCurve = new Curve();
             try
             {
-                var Actuel = (from x in db.DataStock where x.Date >= StartDate && x.Date <= EndDate && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
-                var ActualUntilEnd = (from x in db.DataStock where x.Date >= StartDate && x.Ticker.Equals(ticker) orderby x.Date ascending select x).ToList();
+                var Actuel = (from x in db.DataEstimator where x.Date >= StartDate && x.Date <= EndDate && x.Ticker.Equals(ticker) && x.Name.Equals(type.ToString() + ";" + period.ToString()) orderby x.Date ascending select x).ToList();
+                for (int i = 0; i < Actuel.Count; i++)
+                {
+                    IQuote CurrentQuote = QuoteCreatorHelper.CreateQuote(type, double.Parse(Actuel[i].Value), Actuel[i].Date);
+                    CurrentCurve.Quotes.Add(CurrentQuote);
+                }
             }
+            catch (Exception e)
+            {
+                throw new Exception("Impossible to retrieve estimator data for this range!");
+            }
+            return CurrentCurve;
         }
 
-
-
-
+        public string getTickerFromName(string name)
+        {
+            try
+            {
+                var Actuel = (from x in db.BindingStock where x.Name.Equals(name) select x).ToList();
+                return Actuel[0].Ticker;
+            }catch(Exception e)
+            {
+                throw new Exception("Unfortunately this Stock doesn't exist !");
+            }
+        }
 
         public void RefreshDataMarket()
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace Engine
 {
@@ -38,6 +39,45 @@ namespace Engine
             get { return _isUpToDate; }
             set { _isUpToDate = value; }
         }
+
+        /// <summary>
+        /// Permet de créer une sous courbe entre la minDate et lastDate
+        /// </summary>
+        /// <param name="lastDate"></param>
+        /// <returns></returns>
+        public Curve CreateSubCurve(DateTime lastDate)
+        {
+            Curve subCurve = new Curve();
+            // on récupére la date la plus ancienne
+
+            DateTime minDate = (from q in _quotes
+                                select q).Min((q) => q.Key);
+            if (!_quotes.ContainsKey(lastDate))
+            {
+                throw new Exception(String.Format("{0} is not in the curve", lastDate));
+            }
+
+            for (DateTime d = minDate; d <= lastDate; d = d.AddWorkDays(1))
+            {
+                subCurve.Quotes.Add((IQuote)_quotes[d].Clone());
+            }
+
+            return subCurve;
+        }
+
+        // Concatenate two curve
+        // Update the current curve
+        public void ConcatenateCurve(Curve otherCurve)
+        {
+            foreach (var item in otherCurve.Quotes)
+            {
+                if (!_quotes.ContainsKey(item.Key))
+                {
+                    _quotes.Add(item.Value.Clone() as IQuote);
+                }
+            }
+        }
+
     }
 
     //
@@ -59,6 +99,18 @@ namespace Engine
                 else
                     throw new Exception("Try to add different quote type in a curve");
             }
+        }
+
+        // Copy Constructor
+
+        public CurveList(Dictionary<DateTime, IQuote> dico)  : base(dico)
+        {
+
+        }
+
+        public CurveList() : base()
+        {
+
         }
     }
 }

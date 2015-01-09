@@ -11,13 +11,16 @@ namespace Engine
     // Représente un cours calculé.
     //
     public abstract class Estimator : Quote
+
     {
-        public Estimator(double value, DateTime date) : base(value, date) {}
-        public Estimator(DateTime date) : base(0.0, date) {}
+        protected int _term;
+
+        public Estimator(int term, double value, DateTime date) : base(value, date) { _term = term; }
+        public Estimator(int term, DateTime date) : base(0.0, date) { _term = term;}
 
         public Estimator() { }
 
-        public abstract void Compute(Dictionary<QuoteType, Curve> curve);
+        public abstract void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.NONE);
     }
 
     //
@@ -26,18 +29,16 @@ namespace Engine
     public class MA : Estimator
     {
         // Période de la MM.
-        int _term;
+        //int _term;
 
         public MA() { }
 
-        public MA(double value, DateTime date, int term) : base(value, date) 
+        public MA(double value, DateTime date, int term) : base(term, value, date) 
         {
-            _term = term;
         }
 
-        public MA(DateTime date, int term) : base (date)
+        public MA(DateTime date, int term) : base (term, date)
         {
-            _term = term;
         }
 
         public int Term
@@ -45,7 +46,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.CLOSE];
             if (open == null)
@@ -72,21 +73,19 @@ namespace Engine
     public class EMA : Estimator
     {
         // Période de la MM.
-        int _term;
+        //int _term;
         // Lissage de la moyenne mobile
         double _smooth;
 
         public EMA(double value, DateTime date, int term)
-            : base(value, date)
+            : base(term, value, date)
         {
-            _term = term;
             _smooth = 2 / (_term + 1);
         }
 
         public EMA(DateTime date, int term)
-            : base(date)
+            : base(term, date)
         {
-            _term = term;
             _smooth = (double)2/(_term + 1);
         }
 
@@ -100,7 +99,7 @@ namespace Engine
             get { return _smooth; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.CLOSE];
             if (open == null)
@@ -127,18 +126,16 @@ namespace Engine
     public class WMA : Estimator
     {
         // Période de la MM.
-        int _term;
+        //int _term;
 
         public WMA(double value, DateTime date, int term)
-            : base(value, date)
+            : base(term, value, date)
         {
-            _term = term;
         }
 
         public WMA(DateTime date, int term)
-            : base(date)
+            : base(term , date)
         {
-            _term = term;
         }
 
         public int Term
@@ -146,7 +143,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.CLOSE];
             if (open == null)
@@ -173,18 +170,16 @@ namespace Engine
     public class HMA : Estimator
     {
         // Période de la MM.
-        int _term;
+        //int _term;
 
         public HMA(double value, DateTime date, int term)
-            : base(value, date)
+            : base(term ,value, date)
         {
-            _term = term;
         }
 
         public HMA(DateTime date, int term)
-            : base(date)
+            : base(term, date)
         {
-            _term = term;
         }
 
         public int Term
@@ -192,7 +187,7 @@ namespace Engine
             get { return _term; }
         }
 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.OPEN)
         {
             Curve open = curve[QuoteType.CLOSE];
             if (open == null)
@@ -208,7 +203,7 @@ namespace Engine
             // On calcule toutes les WMA nécessaires
             for (int i = _term; i >= _term - sqrtTerm; i--)
             {
-                tempDate = Date.AddWorkDays(i);
+                tempDate = Date.AddWorkDays(i-_term);
 
                 wmaHigh = new WMA(tempDate, i / 2);
                 wmaLow = new WMA(tempDate, i);
@@ -239,18 +234,16 @@ namespace Engine
     public class RSI : Estimator
     {
         // Période du RSI (Généralement 9 ou 14 jours !).
-        int _term;
+        //int _term;
 
         public RSI(double value, DateTime date, int term)
-            : base(value, date)
+            : base(term, value, date)
         {
-            _term = term;
         }
 
         public RSI(DateTime date, int term)
-            : base(date)
+            : base(term, date)
         {
-            _term = term;
         }
 
         public int Term
@@ -260,7 +253,7 @@ namespace Engine
 
         //Calcul du RSI utilisation des n jours précédents la date d'aujourd'hui
         //Et donc des n-1 derniers gains ou perte journalière
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
             Curve close = curve[QuoteType.CLOSE];
             if (close == null)
@@ -296,18 +289,16 @@ namespace Engine
     public class ROC : Estimator
     {
         // Période du ROC (Généralement de quelques jours ~ 10 !).
-        int _term;
+        //int _term;
 
         public ROC(double value, DateTime date, int term)
-            : base(value, date)
+            : base(term, value, date)
         {
-            _term = term;
         }
 
         public ROC(DateTime date, int term)
-            : base(date)
+            : base(term, date)
         {
-            _term = term;
         }
 
         public int Term
@@ -317,7 +308,7 @@ namespace Engine
 
         //Calcul du RSI utilisation des n jours précédents la date d'aujourd'hui
         //Et donc des n-1 derniers gains ou perte journalière
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
             Curve close = curve[QuoteType.CLOSE];
             if (close == null)
@@ -341,15 +332,15 @@ namespace Engine
         int _farTerm;
         int _nearTerm;
 
-        public MACDLine(double value, DateTime date, int nearTerm, int farTerm)
-            : base(value, date)
+        public MACDLine(double value, DateTime date, int nearTerm, int farTerm, int term)
+            : base(term, value, date)
         {
             _farTerm = farTerm;
             _nearTerm = nearTerm;
         }
 
-        public MACDLine(DateTime date, int nearTerm, int farTerm)
-            : base(date)
+        public MACDLine(DateTime date, int nearTerm, int farTerm, int term)
+            : base(term, date)
         {
             _nearTerm = nearTerm;
             _farTerm = farTerm;
@@ -366,7 +357,7 @@ namespace Engine
         }
 
         //Calcul du MACDLine 
-        public override void Compute(Dictionary<QuoteType, Curve> curve)
+        public override void Compute(Dictionary<QuoteType, Curve> curve, QuoteType quoteType = QuoteType.CLOSE)
         {
             Curve close = curve[QuoteType.CLOSE];
             if (close == null)
@@ -382,7 +373,7 @@ namespace Engine
 
         public override object Clone()
         {
-            return new MACDLine(this.Value, this.Date, this.nearTerm, this.farTerm);
+            return new MACDLine(this.Value, this.Date, this.nearTerm, this.farTerm, this._term);
         }
     }
 }

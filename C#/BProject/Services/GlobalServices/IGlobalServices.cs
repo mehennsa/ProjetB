@@ -16,7 +16,7 @@ namespace Services.GlobalServices
 
         void GetLastMarketData(IAsset asset);
 
-        void GetEstimatorValues(IAsset asset, string estimatorName, IList<DateTime> dates);
+        void GetEstimatorValues(IAsset asset, string estimatorName, DateTime startDate, DateTime endDate);
 
         void RefreshAsset(IAsset asset);
     }
