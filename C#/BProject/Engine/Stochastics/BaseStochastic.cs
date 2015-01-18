@@ -41,17 +41,17 @@ namespace Engine.Stochastics
         #region Constructor
 
         public BaseStochastic(int period)
-            : base(DateTime.Today.AddWorkDays(-1))
+            : base(period, DateTime.Today.AddWorkDays(-1))
         {
-            _period = period;
         }
 
-        public BaseStochastic() : base(DateTime.Today.AddWorkDays(-1))
+        public BaseStochastic()
         {
+            _date = DateTime.Today.AddWorkDays(-1);
         }
 
         public BaseStochastic(int period, double value, DateTime date)
-            : base(value, date)
+            : base(period, value, date)
         {
             _period = period;
         }

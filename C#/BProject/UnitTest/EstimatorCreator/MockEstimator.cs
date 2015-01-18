@@ -10,13 +10,13 @@ namespace UnitTest.EstimatorCreator
     public class MockEstimator : Engine.Estimator
     {
         public MockEstimator()
-            : base(0.0, DateTime.Today)
+            : base(0, 0.0, DateTime.Today)
         {
 
         }
 
         public MockEstimator(double value, DateTime date)
-            : base(value, date)
+            : base(0, value, date)
         {
 
         }
