@@ -9,6 +9,7 @@ using Services.MarketDataProvider;
 using Services.EstimatorFeeder;
 using Engine;
 using Tools;
+using System.Globalization;
 
 namespace Services.GlobalServices
 {
@@ -104,7 +105,7 @@ namespace Services.GlobalServices
 
         public void RefreshAsset(IAsset asset)
         {
-            
+          
         }
 
         #endregion

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Attributes\QuoteCreatorHelper.cs" />
     <Compile Include="Attributes\QuoteImplementation.cs" />
+    <Compile Include="Bollinger\BollingerEstimator.cs" />
     <Compile Include="Curve.cs" />
     <Compile Include="Estimator.cs" />
     <Compile Include="Interface\IUseOtherEstimator.cs" />

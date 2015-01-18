@@ -23,5 +23,12 @@ namespace Services.EstimatorCreator
                 throw new Exception("this estimator is not defined");
             }
         }
+
+        public static Engine.Estimator CreateEstimatorFromInfo(string assembly, string fullname, DateTime date) 
+        {
+            string info = fullname + "," + assembly;
+            Type t = Type.GetType(info, false, false);
+            return CreateEstimatorFromInfo(assembly, fullname);
+        }
     }
 }
